@@ -2,12 +2,12 @@
 <html style="height: 100%">
    <head>
        <meta charset="utf-8">
-       <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
-       <link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.min.css">
-       <link rel="stylesheet" href="/static/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
-       <link rel="stylesheet" href="/static/dist/css/skins/_all-skins.min.css">
-       <link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
-       <link rel="stylesheet" href="/static/plugins/iCheck/all.css">
+       <link rel="stylesheet" href="../static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+       <link rel="stylesheet" href="../static/bower_components/font-awesome/css/font-awesome.min.css">
+       <link rel="stylesheet" href="../static/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+       <link rel="stylesheet" href="../static/dist/css/skins/_all-skins.min.css">
+       <link rel="stylesheet" href="../static/dist/css/AdminLTE.min.css">
+       <link rel="stylesheet" href="../static/plugins/iCheck/all.css">
        <link rel="stylesheet" type="text/css" href="http://www.echartsjs.com/examples/stylesheets/main.css?_v_=1539619299314">    
 
        <style>
@@ -109,9 +109,9 @@ ul {
 
                 
                  
-                <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+                <script src="../static/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- bootstrap color picker -->
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
@@ -122,7 +122,7 @@ ul {
        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
        <!-- <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script> -->
        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
-<script type = "text/javascript" src="/static/readme.js"></script>
+<script type = "text/javascript" src="../static/readme.js"></script>
    
    
        <script>    
@@ -289,10 +289,10 @@ function get_nodes(data) {
     var node_exist = false;
     var endpoint_exist = false;
     var type_dict = {}
+    type_dict["处理任务"] = 0;
     type_dict["处理方法"] = 1;
-    type_dict["处理任务"] = 2;
-    type_dict["数据集"] = 3;
-    type_dict["评估指标"] = 4;
+    type_dict["数据集"] = 2;
+    type_dict["评估指标"] = 3;
     for(var nodes_i in data) {
        tmp_nodes.forEach(item =>{//判断是否有重复的节点
             if(item==data[nodes_i].node){
