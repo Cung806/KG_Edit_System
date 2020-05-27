@@ -116,9 +116,9 @@ WSGI_APPLICATION = 'KG_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', #选择mysql引擎
-        'NAME': 'KG', #数据库名
-        'USER': 'hucong', #用户
-        'PASSWORD': 'cqu1701', #密码
+        'NAME': 'xxx', #数据库名
+        'USER': 'xxxx', #用户
+        'PASSWORD': 'xxxx', #密码
         'HOST': '127.0.0.1', #连接IP地址，默认本地
         'PORT': 3306, #端口，默认3306
         'TEST_CHARSET': 'utf-8'
@@ -174,7 +174,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 #
 host_addr = "http://127.0.0.1:3074"  # neo4j 搭载服务器的ip地址，ifconfig可获取到
 # http_port = 7687  # neo4j 服务器监听的端口号
-user = "neo4j"  # 数据库user name，如果没有更改过，应该是neo4j
-password = "cqu1701"
+user = "xxxx"  # 数据库user name，如果没有更改过，应该是neo4j
+password = "xxxx"
 encoding = 'utf-8'
 
