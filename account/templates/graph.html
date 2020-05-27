@@ -13,21 +13,21 @@
        <style>
 
 .table tbody {
-	display:block;
-	height:300px;
-	width:100%;
-	overflow-y:scroll;
-	text-align: center;
+  display:block;
+  height:300px;
+  width:100%;
+  overflow-y:scroll;
+  text-align: center;
 }
  
 .table thead, tbody tr {
-	display:table;
-	width:100%;
-	table-layout:fixed;
+  display:table;
+  width:100%;
+  table-layout:fixed;
 } 
 
 .table thead tr th{
-	text-align: center;
+  text-align: center;
   
     }
 
@@ -98,26 +98,7 @@ ul {
                                     <div id="charts" style="height: 500px; width: 100%" ></div>
                                   
                                     <div class="table-responsive table-hover" id="table">
-                                            <!-- <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">序号</th>
-                                                            <th scope="col">中心实体</th>
-                                                            <th scope="col">关联实体</th>
-                                                            <th scope="col">对应关系</th>
-                                                            <th scope="col">操作</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="body"> -->
-                                                        <!-- <tr>
-                                                            <td scope="row">11111111111111</td>
-                                                            <td>1</td>
-                                                            <td>1</td>
-                                                            <td>1</td>
-                                                            <td><button class="btn btn-default btn-warning" onclick="bianji()" >编辑</button> &nbsp; <button class="btn btn-default btn-danger" onclick="bianji()" >删除</button></td>
-                                                        </tr>                                                        -->
-                                                    <!-- </tbody>
-                                                  </table> -->
+                                            
 
                                     </div>    
     
@@ -185,8 +166,8 @@ ul {
                           确定删除?
                         </div>
                         <form>
-                        	<input type="hidden" name="data" id="data111">
-                        	<input type="hidden" name="del_name" id="del_name111">
+                          <input type="hidden" name="data" id="data111">
+                          <input type="hidden" name="del_name" id="del_name111">
                         </form>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -207,11 +188,11 @@ ul {
                         </div>
                         <div class="modal-body">
                           <form action="">
-                          	<input type="hidden" name="pass_data" id="pass_data">
-							<input type="radio" name="del_name" value="relation" style="width:20px;height:20px;font-size:40px"><sup><b style="font-size:15px">删除实体关系</b></sup><br>
-							<input type="radio" name="del_name" value="startnode" style="width:20px;height:20px"><sup><b style="font-size:15px">删除起点实体</b></sup><br>
-							<input type="radio" name="del_name" value="endnode" style="width:20px;height:20px"><sup><b style="font-size:15px">删除终点实体</b></sup>
-						  </form>
+                            <input type="hidden" name="pass_data" id="pass_data">
+              <input type="radio" name="del_name" value="relation" style="width:20px;height:20px;font-size:40px"><sup><b style="font-size:15px">删除实体关系</b></sup><br>
+              <input type="radio" name="del_name" value="startnode" style="width:20px;height:20px"><sup><b style="font-size:15px">删除起点实体</b></sup><br>
+              <input type="radio" name="del_name" value="endnode" style="width:20px;height:20px"><sup><b style="font-size:15px">删除终点实体</b></sup>
+              </form>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -403,9 +384,9 @@ ul {
 
            $.getJSON(path+"get_label_relation_list",function(data){
 
-           	console.log("data",data);
+            console.log("data",data);
 
-            window.type1=data["label_list"];	
+            window.type1=data["label_list"];  
             window.type2=data["relation_list"];
 
             console.log(window.type1);
@@ -455,7 +436,7 @@ ul {
     };
 
     function logout(){
-    	window.location.href = "/account/logout/";//胡聪的url
+      window.location.href = "/account/logout/";//胡聪的url
     };
 
  function shaixuan(){
@@ -527,24 +508,24 @@ function change(data){
             if(result == "SUCCESS"){
                  removeAllChild(data.index);
         var tr = document.getElementById(data.index)
-           var td =tr.insertCell (tr.cells.length);
-                td.innerHTML =data.index;
+           var td =tr.insertCell (tr.cells.length);
+                td.innerHTML =data.index;
 
 
-             var td = tr.insertCell (tr.cells.length);
-                td.innerHTML =new_entity1;
-var td = tr.insertCell (tr.cells.length);
-                td.innerHTML =new_entity1_type;
-             var td = tr.insertCell (tr.cells.length);
-                td.innerHTML =new_entity2;
-var td = tr.insertCell (tr.cells.length);
-                td.innerHTML =new_entity2_type;
-             var td = tr.insertCell (tr.cells.length);
-                td.innerHTML =new_relation;
-             var td = tr.insertCell (tr.cells.length);
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =new_entity1;
+var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =new_entity1_type;
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =new_entity2;
+var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =new_entity2_type;
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =new_relation;
+             var td = tr.insertCell (tr.cells.length);
             var obj = {index:data.index,entity1:new_entity1,entity1_type:new_entity1_type,entity2:new_entity2,entity2_type:new_entity2_type,value:new_relation}
-                //td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JSON.stringify(obj)+")' data-toggle='modal' data-target='#exampleModal'>编辑</button> &nbsp; <button class='btn btn-default btn-danger' data-toggle='modal' data-target='#exampleModal2' onclick=dele("+JSON.stringify(obj)+")>删除</button> &nbsp;<button class='btn btn-default btn-info' data-toggle='modal' data-target='#exampleModal4' onclick='xiangqing("+JSON.stringify(obj)+")' >详情</button>"; 
-td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JSON.stringify(obj)+")' data-toggle='modal' data-target='#exampleModal'>编辑</button> &nbsp; <button class='btn btn-default btn-danger' onclick=dele("+JSON.stringify(obj)+")>删除</button> &nbsp;<button class='btn btn-default btn-info' data-toggle='modal' data-target='#exampleModal4' onclick='xiangqing("+JSON.stringify(obj)+")' >详情</button>";     
+                //td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JSON.stringify(obj)+")' data-toggle='modal' data-target='#exampleModal'>编辑</button> &nbsp; <button class='btn btn-default btn-danger' data-toggle='modal' data-target='#exampleModal2' onclick=dele("+JSON.stringify(obj)+")>删除</button> &nbsp;<button class='btn btn-default btn-info' data-toggle='modal' data-target='#exampleModal4' onclick='xiangqing("+JSON.stringify(obj)+")' >详情</button>"; 
+td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JSON.stringify(obj)+")' data-toggle='modal' data-target='#exampleModal'>编辑</button> &nbsp; <button class='btn btn-default btn-danger' onclick=dele("+JSON.stringify(obj)+")>删除</button> &nbsp;<button class='btn btn-default btn-info' data-toggle='modal' data-target='#exampleModal4' onclick='xiangqing("+JSON.stringify(obj)+")' >详情</button>";     
                 td.setAttribute("style","width:20%");             
                 alert("修改成功");        
             }else{
@@ -558,93 +539,93 @@ td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JS
 function dele(data){
         //document.getElementById("delete_sure").setAttribute("onclick","del("+JSON.stringify(data)+")");
        // $("#dele").click(function(data){
-		$('#delete_selection').modal().on('shown.bs.modal',function() {
-				console.log(JSON.stringify(data));
-				$("#pass_data").val(JSON.stringify(data)); 
-    	 	})
+    $('#delete_selection').modal().on('shown.bs.modal',function() {
+        console.log(JSON.stringify(data));
+        $("#pass_data").val(JSON.stringify(data)); 
+        })
 
-	//})
+  //})
     };
 
 function del(data,del_name){
-	//获取表单中的数据
-	     var selection = del_name;//document.getElementsByName("del_name");
-	     //alert(selection);
-	     var data = eval('(' + data + ')');
-	     if(selection == "relation"){
-	     	$.ajax({
-	    	 type:"post",//提交方式
-	    	 url:path+"delete_relation",
-	    	 data:{n_name:data.entity1,n_label:data.entity1_type,r_name:data.value,m_name:data.entity2,m_label:data.entity2_type},//数据
-	    	 dataType:"text",//返回的数据类型为json
-	    	 success:function(text){
-	    		 
-	    		 if(text == "SUCCESS"){
-	    		     show(window.txt);
-	    			 alert("删除成功！");
-	    		 }
-	    		 else if(text == "RELATION_FAIL"){
-	    		 	alert("该关系不存在，无法进行删除！");
-	    		 }
-	    		 else if(text == "ENTITY_FAIL"){
-	    		 	alert("该实体不存在，无法进行删除！");
-	    		 }else{
-	    		 	alert("删除失败！");
-	    		 }
-	    	 }
-	    	})
+  //获取表单中的数据
+       var selection = del_name;//document.getElementsByName("del_name");
+       //alert(selection);
+       var data = eval('(' + data + ')');
+       if(selection == "relation"){
+        $.ajax({
+         type:"post",//提交方式
+         url:path+"delete_relation",
+         data:{n_name:data.entity1,n_label:data.entity1_type,r_name:data.value,m_name:data.entity2,m_label:data.entity2_type},//数据
+         dataType:"text",//返回的数据类型为json
+         success:function(text){
+           
+           if(text == "SUCCESS"){
+               show(window.txt);
+             alert("删除成功！");
+           }
+           else if(text == "RELATION_FAIL"){
+            alert("该关系不存在，无法进行删除！");
+           }
+           else if(text == "ENTITY_FAIL"){
+            alert("该实体不存在，无法进行删除！");
+           }else{
+            alert("删除失败！");
+           }
+         }
+        })
 
-	     }
-	     else if(selection == "startnode"){
-	     	$.ajax({
-	    	 type:"post",//提交方式
-	    	 url:path+"delete_startnode",
-	    	 data:{n_name:data.entity1,n_label:data.entity1_type,r_name:data.value,m_name:data.entity2,m_label:data.entity2_type},//数据
-	    	 dataType:"text",//返回的数据类型为json
-	    	 success:function(text){
-	    		 
-	    		 if(text == "SUCCESS"){
-	    		    if(data.entity2=="无"){
-	    		        window.location.reload();
-	    		    }
-	    		     show(window.txt);
-	    			 alert("删除成功！");
-	    		 }
-	    		 else if(text == "RELATION_FAIL"){
-	    		 	alert("该关系不存在，无法进行删除！");
-	    		 }
-	    		 else if(text == "ENTITY_FAIL"){
-	    		 	alert("该实体不存在，无法进行删除！");
-	    		 }else{
-	    		 	alert("删除失败！");
-	    		 }
-	    	 }
-	    	})
-	     }
-	     else{
-	     	$.ajax({
-	    	 type:"post",//提交方式
-	    	 url:path+"delete_endnode",
-	    	 data:{n_name:data.entity1,n_label:data.entity1_type,r_name:data.value,m_name:data.entity2,m_label:data.entity2_type},//数据
-	    	 dataType:"text",//返回的数据类型为json
-	    	 success:function(text){
-	    		 
-	    		 if(text == "SUCCESS"){
-	    		     show(window.txt);
-	    			 alert("删除成功！");
-	    		 }
-	    		 else if(text == "RELATION_FAIL"){
-	    		 	alert("该关系不存在，无法进行删除！");
-	    		 }
-	    		 else if(text == "ENTITY_FAIL"){
-	    		 	alert("该实体不存在，无法进行删除！");
-	    		 }else{
-	    		 	alert("删除失败！");
-	    		 }
-	    	 }
-	    	})
+       }
+       else if(selection == "startnode"){
+        $.ajax({
+         type:"post",//提交方式
+         url:path+"delete_startnode",
+         data:{n_name:data.entity1,n_label:data.entity1_type,r_name:data.value,m_name:data.entity2,m_label:data.entity2_type},//数据
+         dataType:"text",//返回的数据类型为json
+         success:function(text){
+           
+           if(text == "SUCCESS"){
+              if(data.entity2=="无"){
+                  window.location.reload();
+              }
+               show(window.txt);
+             alert("删除成功！");
+           }
+           else if(text == "RELATION_FAIL"){
+            alert("该关系不存在，无法进行删除！");
+           }
+           else if(text == "ENTITY_FAIL"){
+            alert("该实体不存在，无法进行删除！");
+           }else{
+            alert("删除失败！");
+           }
+         }
+        })
+       }
+       else{
+        $.ajax({
+         type:"post",//提交方式
+         url:path+"delete_endnode",
+         data:{n_name:data.entity1,n_label:data.entity1_type,r_name:data.value,m_name:data.entity2,m_label:data.entity2_type},//数据
+         dataType:"text",//返回的数据类型为json
+         success:function(text){
+           
+           if(text == "SUCCESS"){
+               show(window.txt);
+             alert("删除成功！");
+           }
+           else if(text == "RELATION_FAIL"){
+            alert("该关系不存在，无法进行删除！");
+           }
+           else if(text == "ENTITY_FAIL"){
+            alert("该实体不存在，无法进行删除！");
+           }else{
+            alert("删除失败！");
+           }
+         }
+        })
 
-	     }
+       }
 
        
         /*$.post(path+"delete_relation",{n_name:data.entity1,n_label:data.entity1_type,r_name:data.value,m_name:data.entity2,m_label:data.entity2_type},function(result){   
@@ -658,8 +639,8 @@ function del(data,del_name){
     };
 
 
-	  
-	    
+    
+      
   
 
 function xiangqing(data){
@@ -742,7 +723,7 @@ function increase(text){
        //document.getElementById("Select3").appendChild(option2);
        //document.getElementById("Select_relation_type").appendChild(option2);
 
-       <!--console.log("increase",window.type1); 	-->
+       <!--console.log("increase",window.type1);  -->
 
        for(var i =0;i<window.type1.length;i++){
         var option = document.createElement("option");
@@ -767,11 +748,11 @@ function increase(text){
 
 function removeAllChild(text)
 {
-    var a = document.getElementById(text);
-    while(a.hasChildNodes()) //当div下还存在子节点时 循环继续
-    {
-        a.removeChild(a.firstChild);
-    }
+    var a = document.getElementById(text);
+    while(a.hasChildNodes()) //当div下还存在子节点时 循环继续
+    {
+        a.removeChild(a.firstChild);
+    }
 };
 
 function show(text){
@@ -798,7 +779,7 @@ function show(text){
             
          // showchart(result[0]);
           //tablecontent(result[0]);
-    		
+        
          // console.log("show",text.name);
          // increase(text);
              
@@ -821,7 +802,15 @@ function showchart(data){
     var myChart = echarts.init(chart);
     myChart.off('click');
     var app = {};  
-    option=null;   
+    option=null;
+
+    var categories = [];
+    var type_list = ["处理任务","处理方法","数据集","评估指标"];
+    for (var i = 1; i < 5; i++) {
+        categories[i-1] = {
+            name: type_list[i-1]
+        };
+    }   
 
                   
        
@@ -831,6 +820,12 @@ function get_nodes(data) {
     var node_exist = false;
     var endpoint_exist = false;
     
+    var type_dict = {}
+    type_dict["处理任务"] = 0;
+    type_dict["处理方法"] = 1;
+    type_dict["数据集"] = 2;
+    type_dict["评估指标"] = 3;
+
     for(var nodes_i in data) {
        tmp_nodes.forEach(item =>{
             if(item==data[nodes_i].node){
@@ -849,6 +844,7 @@ function get_nodes(data) {
             {
                 'name':data[nodes_i].node,
                 'type':data[nodes_i].type,
+                'category':type_dict[data[nodes_i].type],
             }
         );
         };
@@ -860,6 +856,7 @@ function get_nodes(data) {
          {
         'name':data[nodes_i].endpoint,
         'type':data[nodes_i].endpointtype,
+        'category':type_dict[data[nodes_i].endpointtype],
             }
         );
         };    
@@ -948,6 +945,7 @@ var option = {
             },
             data: get_nodes(data),
             links: get_links(data),
+            categories: categories,
             lineStyle: {
                 normal: {
                     opacity: 0.9,
@@ -979,61 +977,61 @@ myChart.on('click', function (params) {
 
 function tablecontent(data){
         removeAllChild("table");    
- 
-var entity = [];
-for (var i = 0; i < data.length; i++)
+ 
+var entity = [];
+for (var i = 0; i < data.length; i++)
 {
-    var d = data[i];    
+    var d = data[i];    
     entity.push({index:(i+1),entity1:d["node"],entity1_type:d["type"],entity2:d["endpoint"],entity2_type:d["endpointtype"],value:d["value"]});
 }
- 
+ 
 
-    var table = document.createElement("table");
+    var table = document.createElement("table");
     table.className="table";
-    var thead = document.createElement("thead");
+    var thead = document.createElement("thead");
     table.appendChild(thead);
-    var tr = thead.insertRow (0);
-    var str = "序号,起点实体,起点实体类型,终点实体,终点实体类型,实体关系,操作".split(",");
-    for (var i = 0; i < str.length; i++)
-    {
-        var th = document.createElement("th");
-        th.innerHTML = str[i];
+    var tr = thead.insertRow (0);
+    var str = "序号,起点实体,起点实体类型,终点实体,终点实体类型,实体关系,操作".split(",");
+    for (var i = 0; i < str.length; i++)
+    {
+        var th = document.createElement("th");
+        th.innerHTML = str[i];
         if(i == str.length-1){
             th.setAttribute("style","width:20%");
         }
-        tr.appendChild (th);
-    }
+        tr.appendChild (th);
+    }
 
-    var tbody = document.createElement("tbody");    
-    table.appendChild(tbody);   
-   
-    for (var i = 0; i < entity.length; i++)
-    {
-        var tr = tbody.insertRow (tbody.rows.length);        
-        var obj = entity[i];
-        tr.setAttribute("id",JSON.stringify(obj["index"]));
+    var tbody = document.createElement("tbody");    
+    table.appendChild(tbody);   
+   
+    for (var i = 0; i < entity.length; i++)
+    {
+        var tr = tbody.insertRow (tbody.rows.length);        
+        var obj = entity[i];
+        tr.setAttribute("id",JSON.stringify(obj["index"]));
 
-             var td = tr.insertCell (tr.cells.length);
-                td.innerHTML =obj["index"];
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =obj["index"];
 
 
-             var td = tr.insertCell (tr.cells.length);
-                td.innerHTML =obj["entity1"];
-var td = tr.insertCell (tr.cells.length);
-                td.innerHTML =obj["entity1_type"];
-             var td = tr.insertCell (tr.cells.length);
-                td.innerHTML =obj["entity2"];
-var td = tr.insertCell (tr.cells.length);
-                td.innerHTML =obj["entity2_type"];
-             var td = tr.insertCell (tr.cells.length);
-                td.innerHTML =obj["value"];
-             var td = tr.insertCell (tr.cells.length);
-                //td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JSON.stringify(obj)+")' data-toggle='modal' data-target='#exampleModal'>编辑</button> &nbsp; <button class='btn btn-default btn-danger' data-toggle='modal' data-target='#exampleModal2' onclick=dele("+JSON.stringify(obj)+")>删除</button> &nbsp;<button class='btn btn-default btn-info' data-toggle='modal' data-target='#exampleModal4' onclick='xiangqing("+JSON.stringify(obj)+")' >详情</button>";  
-td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JSON.stringify(obj)+")' data-toggle='modal' data-target='#exampleModal'>编辑</button> &nbsp; <button class='btn btn-default btn-danger' onclick=dele("+JSON.stringify(obj)+")>删除</button> &nbsp;<button class='btn btn-default btn-info' data-toggle='modal' data-target='#exampleModal4' onclick='xiangqing("+JSON.stringify(obj)+")' >详情</button>";     
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =obj["entity1"];
+var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =obj["entity1_type"];
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =obj["entity2"];
+var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =obj["entity2_type"];
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =obj["value"];
+             var td = tr.insertCell (tr.cells.length);
+                //td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JSON.stringify(obj)+")' data-toggle='modal' data-target='#exampleModal'>编辑</button> &nbsp; <button class='btn btn-default btn-danger' data-toggle='modal' data-target='#exampleModal2' onclick=dele("+JSON.stringify(obj)+")>删除</button> &nbsp;<button class='btn btn-default btn-info' data-toggle='modal' data-target='#exampleModal4' onclick='xiangqing("+JSON.stringify(obj)+")' >详情</button>";  
+td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JSON.stringify(obj)+")' data-toggle='modal' data-target='#exampleModal'>编辑</button> &nbsp; <button class='btn btn-default btn-danger' onclick=dele("+JSON.stringify(obj)+")>删除</button> &nbsp;<button class='btn btn-default btn-info' data-toggle='modal' data-target='#exampleModal4' onclick='xiangqing("+JSON.stringify(obj)+")' >详情</button>";     
                 td.setAttribute("style","width:20%");
-        
-    }
-    document.getElementById("table").appendChild(table);       
+        
+    }
+    document.getElementById("table").appendChild(table);       
     };   
 
      function add_node_fun()  
@@ -1066,179 +1064,104 @@ td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JS
           
 
         <script type="text/javascript">
-        	$.ajax({  
-		    type : 'get',  
-		    url : path+"get_label_relation_list",  
-		    dataType : 'json',      
-		    success : function(datas) {//返回list数据并循环获取  
-		    	
-		        var select = $("#Select3");
-		        for (var i = 0; i < datas.relation_list.length; i++) { 
-		        	select.append("<option value='" +datas.relation_list[i]+ "'>"  
-		                    + datas.relation_list[i] + "</option>");  
-		        }    
-		    } 
-		}); 
+          $.ajax({  
+        type : 'get',  
+        url : path+"get_label_relation_list",  
+        dataType : 'json',      
+        success : function(datas) {//返回list数据并循环获取  
+          
+            var select = $("#Select3");
+            for (var i = 0; i < datas.relation_list.length; i++) { 
+              select.append("<option value='" +datas.relation_list[i]+ "'>"  
+                        + datas.relation_list[i] + "</option>");  
+            }    
+        } 
+    }); 
 
-        	$.ajax({  
-		    type : 'get',  
-		    url : path+"get_label_relation_list",  
-		    dataType : 'json',      
-		    success : function(datas) {//返回list数据并循环获取  
-		    	
-		        var select = $("#Select_relation_type");
-		        for (var i = 0; i < datas.relation_list.length; i++) { 
-		        	select.append("<option value='" +datas.relation_list[i]+ "'>"  
-		                    + datas.relation_list[i] + "</option>");  
-		        }    
-		    } 
-		}); 
+          $.ajax({  
+        type : 'get',  
+        url : path+"get_label_relation_list",  
+        dataType : 'json',      
+        success : function(datas) {//返回list数据并循环获取  
+          
+            var select = $("#Select_relation_type");
+            for (var i = 0; i < datas.relation_list.length; i++) { 
+              select.append("<option value='" +datas.relation_list[i]+ "'>"  
+                        + datas.relation_list[i] + "</option>");  
+            }    
+        } 
+    }); 
 
-        	$.ajax({  
-		    type : 'get',  
-		    url : path+"get_label_relation_list",  
-		    dataType : 'json',      
-		    success : function(datas) {//返回list数据并循环获取  
-		    	
-		        var select = $("#Select2");
-		        for (var i = 0; i < datas.label_list.length; i++) { 
-		        	select.append("<option value='" +datas.label_list[i]+ "'>"  
-		                    + datas.label_list[i] + "</option>");  
-		        }    
-		    } 
-		}); 
+          $.ajax({  
+        type : 'get',  
+        url : path+"get_label_relation_list",  
+        dataType : 'json',      
+        success : function(datas) {//返回list数据并循环获取  
+          
+            var select = $("#Select2");
+            for (var i = 0; i < datas.label_list.length; i++) { 
+              select.append("<option value='" +datas.label_list[i]+ "'>"  
+                        + datas.label_list[i] + "</option>");  
+            }    
+        } 
+    }); 
 
-        	$.ajax({  
-		    type : 'get',  
-		    url : path+"get_label_relation_list",  
-		    dataType : 'json',      
-		    success : function(datas) {//返回list数据并循环获取  
-		    	
-		        var select = $("#start_type");
-		        for (var i = 0; i < datas.label_list.length; i++) { 
-		        	select.append("<option value='" +datas.label_list[i]+ "'>"  
-		                    + datas.label_list[i] + "</option>");  
-		        }    
-		    } 
-		}); 
+          $.ajax({  
+        type : 'get',  
+        url : path+"get_label_relation_list",  
+        dataType : 'json',      
+        success : function(datas) {//返回list数据并循环获取  
+          
+            var select = $("#start_type");
+            for (var i = 0; i < datas.label_list.length; i++) { 
+              select.append("<option value='" +datas.label_list[i]+ "'>"  
+                        + datas.label_list[i] + "</option>");  
+            }    
+        } 
+    }); 
 
-        	$.ajax({  
-		    type : 'get',  
-		    url : path+"get_label_relation_list",  
-		    dataType : 'json',      
-		    success : function(datas) {//返回list数据并循环获取  
-		    	
-		        var select = $("#node_type");
-		        for (var i = 0; i < datas.label_list.length; i++) { 
-		        	select.append("<option value='" +datas.label_list[i]+ "'>"  
-		                    + datas.label_list[i] + "</option>");  
-		        }    
-		    } 
-		}); 
+          $.ajax({  
+        type : 'get',  
+        url : path+"get_label_relation_list",  
+        dataType : 'json',      
+        success : function(datas) {//返回list数据并循环获取  
+          
+            var select = $("#node_type");
+            for (var i = 0; i < datas.label_list.length; i++) { 
+              select.append("<option value='" +datas.label_list[i]+ "'>"  
+                        + datas.label_list[i] + "</option>");  
+            }    
+        } 
+    }); 
 
         </script>
 
         <script type="text/javascript">
-	$("#delete_selection_bnt").click(function(){
-			var data = $("#pass_data").val();
-			var radio = document.getElementsByName("radio");
-			var del_name=$('input:radio:checked').val(); 
-		$('#exampleModal2').modal().on('shown.bs.modal',function() {
+  $("#delete_selection_bnt").click(function(){
+      var data = $("#pass_data").val();
+      var radio = document.getElementsByName("radio");
+      var del_name=$('input:radio:checked').val(); 
+    $('#exampleModal2').modal().on('shown.bs.modal',function() {
 
-			console.log(del_name);
-			console.log(data);
-				//document.getElementById("delete_sure").setAttribute("onclick","del( \""+data+"\",\""+del_name+"\")");
-				$("#data111").val(data);
-		    	$("#del_name111").val(del_name);
-    	 	})
+      console.log(del_name);
+      console.log(data);
+        //document.getElementById("delete_sure").setAttribute("onclick","del( \""+data+"\",\""+del_name+"\")");
+        $("#data111").val(data);
+          $("#del_name111").val(del_name);
+        })
 
-	})
+  })
 
-	$("#delete_sure").click(function(){
-		var data = $("#data111").val();
-		//var radio = document.getElementsByName("radio");
-		var del_name=$("#del_name111").val();
-		console.log(data);
-		console.log(del_name);
-		del(data,del_name);
+  $("#delete_sure").click(function(){
+    var data = $("#data111").val();
+    //var radio = document.getElementsByName("radio");
+    var del_name=$("#del_name111").val();
+    console.log(data);
+    console.log(del_name);
+    del(data,del_name);
 
-	})
-	 /*$("#delete_sure").click(function(){
-	  
-	    //获取表单中的数据
-	     var selection = document.getElementsByName("del_name");
-	     if(selection == "relation"){
-	     	$.ajax({
-	    	 type:"post",//提交方式
-	    	 url:path+"delete_relation",
-	    	 data:CheckItemForm,//数据
-	    	 dataType:"text",//返回的数据类型为json
-	    	 success:function(text){
-	    		var selection = document.getElementsByName(" 
-	    		 if(text == "SUCCESS"){
-	    		     show(window.txt);
-	    			 alert("删除成功！");
-	    		 }
-	    		 else if(text == "RELATION_FAIL"){
-	    		 	alert("该关系不存在，无法进行删除！");
-	    		 }
-	    		 else if(text == "ENTITY_FAIL"){
-	    		 	alert("该实体不存在，无法进行删除！");
-	    		 }else{
-	    		 	alert("删除失败！");
-	    		 }
-	    	 }
-	    	})
-
-	     }
-	     else if(selection == "startnode"){
-	     	$.ajax({
-	    	 type:"post",//提交方式
-	    	 url:path+"delete_startnode",
-	    	 data:CheckItemForm,//数据
-	    	 dataType:"text",//返回的数据类型为json
-	    	 success:function(text){
-	    		 
-	    		 if(text == "SUCCESS"){
-	    		     show(window.txt);
-	    			 alert("删除成功！");
-	    		 }
-	    		 else if(text == "RELATION_FAIL"){
-	    		 	alert("该关系不存在，无法进行删除！");
-	    		 }
-	    		 else if(text == "ENTITY_FAIL"){
-	    		 	alert("该实体不存在，无法进行删除！");
-	    		 }else{
-	    		 	alert("删除失败！");
-	    		 }
-	    	 }
-	    	})
-	     }
-	     else{
-	     	$.ajax({
-	    	 type:"post",//提交方式
-	    	 url:path+"delete_endnode",
-	    	 data:CheckItemForm,//数据
-	    	 dataType:"text",//返回的数据类型为json
-	    	 success:function(text){
-	    		 
-	    		 if(text == "SUCCESS"){
-	    		     show(window.txt);
-	    			 alert("删除成功！");
-	    		 }
-	    		 else if(text == "RELATION_FAIL"){
-	    		 	alert("该关系不存在，无法进行删除！");
-	    		 }
-	    		 else if(text == "ENTITY_FAIL"){
-	    		 	alert("该实体不存在，无法进行删除！");
-	    		 }else{
-	    		 	alert("删除失败！");
-	    		 }
-	    	 }
-	    	})
-
-	     }
-  })*/
+  })
+   
 </script>
       </body>
 </html>

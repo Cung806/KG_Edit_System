@@ -199,7 +199,7 @@ ul {
 
                   <!--删除单选框-->
 
-                  <div class="modal fade" id="delete_selection" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                  <div class="modal fade" id="delete_selection" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true" align='center' style = 'padding: 300px 0'>
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -208,9 +208,9 @@ ul {
                         <div class="modal-body">
                           <form action="">
                           	<input type="hidden" name="pass_data" id="pass_data">
-							<input type="radio" name="del_name" value="relation">删除关系<br>
-							<input type="radio" name="del_name" value="startnode">删除源结点<br>
-							<input type="radio" name="del_name" value="endnode">删除目标节点
+							<input type="radio" name="del_name" value="relation" style="width:20px;height:20px;font-size:40px"><sup><b style="font-size:15px">删除实体关系</b></sup><br>
+							<input type="radio" name="del_name" value="startnode" style="width:20px;height:20px"><sup><b style="font-size:15px">删除起点实体</b></sup><br>
+							<input type="radio" name="del_name" value="endnode" style="width:20px;height:20px"><sup><b style="font-size:15px">删除终点实体</b></sup>
 						  </form>
                         </div>
                         <div class="modal-footer">
@@ -394,18 +394,6 @@ ul {
        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
        <!-- <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script> -->
        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
-
-
-<!-- 
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
-
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script> -->
 <script type = "text/javascript" src="/static/readme.js"></script>
    
    
@@ -474,10 +462,10 @@ ul {
      var relation = document.getElementById("shaixuan").value;
      $.post(path+"get_neighbor",{entity_name:window.txt.name,entity_label:window.txt.label,relation_label:relation},function(result){
               
-                if(result[0].length==0){
+                if(result[0][0].endpoint=="无"){
                     alert("没有该关系")
                 }else{
-                       showchart(result[0]);
+                      showchart(result[0]);
                       tablecontent(result[0]);
     
                       increase(window.txt);
@@ -582,6 +570,7 @@ function del(data,del_name){
 	//获取表单中的数据
 	     var selection = del_name;//document.getElementsByName("del_name");
 	     //alert(selection);
+	     var data = eval('(' + data + ')');
 	     if(selection == "relation"){
 	     	$.ajax({
 	    	 type:"post",//提交方式
@@ -591,6 +580,7 @@ function del(data,del_name){
 	    	 success:function(text){
 	    		 
 	    		 if(text == "SUCCESS"){
+	    		     show(window.txt);
 	    			 alert("删除成功！");
 	    		 }
 	    		 else if(text == "RELATION_FAIL"){
@@ -614,6 +604,10 @@ function del(data,del_name){
 	    	 success:function(text){
 	    		 
 	    		 if(text == "SUCCESS"){
+	    		    if(data.entity2=="无"){
+	    		        window.location.reload();
+	    		    }
+	    		     show(window.txt);
 	    			 alert("删除成功！");
 	    		 }
 	    		 else if(text == "RELATION_FAIL"){
@@ -636,6 +630,7 @@ function del(data,del_name){
 	    	 success:function(text){
 	    		 
 	    		 if(text == "SUCCESS"){
+	    		     show(window.txt);
 	    			 alert("删除成功！");
 	    		 }
 	    		 else if(text == "RELATION_FAIL"){
@@ -1053,11 +1048,13 @@ td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JS
               success:function(text){                 
                  if(text =="SUCCESS"){             
                     $("#add_node").modal('hide'); 
-                    alert("增加节点成功")       
+                    alert("增加节点成功");
                  }
-                 else
+                 else if(text =="NODE EXIST")
                  {
-                  alert("增加节点失败")
+                  alert("该节点已经存在！");
+                 }else{
+                  alert("增加节点失败");
                  }
                }
           })
@@ -1179,6 +1176,7 @@ td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JS
 	    	 success:function(text){
 	    		var selection = document.getElementsByName(" 
 	    		 if(text == "SUCCESS"){
+	    		     show(window.txt);
 	    			 alert("删除成功！");
 	    		 }
 	    		 else if(text == "RELATION_FAIL"){
@@ -1202,6 +1200,7 @@ td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JS
 	    	 success:function(text){
 	    		 
 	    		 if(text == "SUCCESS"){
+	    		     show(window.txt);
 	    			 alert("删除成功！");
 	    		 }
 	    		 else if(text == "RELATION_FAIL"){
@@ -1224,6 +1223,7 @@ td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JS
 	    	 success:function(text){
 	    		 
 	    		 if(text == "SUCCESS"){
+	    		     show(window.txt);
 	    			 alert("删除成功！");
 	    		 }
 	    		 else if(text == "RELATION_FAIL"){
