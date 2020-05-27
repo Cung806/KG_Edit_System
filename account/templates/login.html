@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>专业知识图谱编辑平台登录</title>
+		<!-- 页面背景格式连接 -->
+		<link href="/static/dist/css/styleforlogin1.css" rel="stylesheet" type="text/css" media="all"/>
+		<!--继承已有的连接-->
+		<link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/static/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+		<link rel="stylesheet" href="/static/dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="/static/plugins/iCheck/all.css">
+		<link rel="stylesheet" type="text/css" href="http://www.echartsjs.com/examples/stylesheets/main.css?_v_=1539619299314">  
+		<!-- Custom Theme files -->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="keywords" content="后台登录" />
+
+
+	</head>
+
+<body>
+<!--header start here-->
+	<div class="login-form">
+		<div class="top-login">
+			<span><img src="../static/dist/img/group.png" alt=""/></span>
+		</div>
+		<h1>专业知识图谱编辑平台</h1>
+		<h1>登录</h1>
+		
+		<div class="login-top" style="width: 450px; float: center;">
+			<form>
+				<div class="login-ic">
+					<i ></i>
+					<input type="text" id="username_read"  value="用户" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = '用户名';}"/ required>
+					<div class="clear"> </div>
+				</div>
+				<div class="login-ic">
+					<i class="icon"></i>
+					<input type="password" id="psw_read"  value="密码" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'password';}"/ required>
+					<div class="clear"> </div>
+				</div>
+				<div class="login-ic">
+					<b class="domain" style="font-size: 15px;font-weight: 400;color: #fff;">您所在的领域</b>
+					
+		                          <select id="domain_select" name="domain_name" class="form-control">
+		                                              
+		                          </select>
+		                        
+					<div class="clear"> </div>
+				</div>
+				<div class="log-bwn" id = "log-bwn">
+					<input type="button" value="Login" style=" background-color: #DC143C;color: white; width: 100%; font-size: 32px;" >	
+					<div class="clear"> </div>
+				</div>
+				<div class="log-bwn" id = "log-bwn1" style="  width: 100%; height:15px;font-size: 32px;">	
+				</div>
+				
+					
+				
+
+			</form>
+			
+
+		</div>
+		<center><a style=" text-decoration:underline;color: white; width: 100%; font-size: 20px;float: center;"href="http://39.100.48.36:3010/account/demo/" >演示入口</a>	</center>
+		
+</div>
+
+	<!--引用jquary库-->
+	<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+
+	<script type="text/javascript">
+	  	//$("form").submit(function()
+	  	//{
+			$("#log-bwn").click(function() {
+			    var username = $("#username_read").val();
+			    var psw = $("#psw_read").val();
+			    var domain_name = $("#domain_select").val();
+			    $.ajax({
+			        type: "post",//请求的方式
+			        url: "http://39.100.48.36:3010/account/login/",//胡聪学长给的url
+			        data: {username:username,password:psw,domain:domain_name}, //     
+			        dataType:"text",//返回的数据类型为json
+			        success : function(json) {
+			        	console.log(json)
+			        	if(json == "SUCCESS"){
+				            	window.location.href="/account";
+			        	}
+			        	else if(json == "USER FAIL")
+			        	{
+			        		console.log("身份认证失败");
+			        		alert("身份认证失败，请填写正确的用户名和密码！");
+			        	}
+			        	else{
+			        		console.log("领域认证失败");
+			        		alert("抱歉，您没有该领域的操作权限！");
+			        	}
+
+			        },
+			        error : function(json) {
+			        	console.log("youwu");
+			        }
+			    }
+			    );
+			}
+			);  	  
+	    //}
+	    //)
+	    $("#log-bwn1").click(function() {
+	    	window.location.href="http://39.100.48.36:3010/account/demo/";
+	    })
+	    $.ajax({  
+		    type : 'get',  
+		    url : "http://39.100.48.36:3010/manageDomain/get_domain_list/",
+		    dataType : 'json',      
+		    success : function(datas) {//返回list数据并循环获取  
+		    	
+		        var select = $("#domain_select");
+		        for (var i = 0; i < datas.domain_list.length; i++) { 
+		        	select.append("<option value='" +datas.domain_list[i]+ "'>"  
+		                    + datas.domain_list[i] + "</option>");  
+		        }    
+		    } 
+		}); 
+	</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+@charset "utf-8";
+.reminder-container {
+  margin:40px auto 0 auto;
+  width: 500px;
+  text-align: center
+}
+
+input[type='text'] {
+  
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  font-weight:300;
+  color: white;
+  float:left;
+  padding:5px 10px;
+  -webkit-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease;
+  background-color: rgba(255,255,255,.15);
+}
+
+moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+input[type='text']:focus {
+  outline: none;
+}
+.icon-trash,
+.icon-pencil,
+.icon-save {
+  position: absolute;
+  top: 3px;
+  color: #aaa;
+  cursor: pointer;
+  right: 40px
+}
+
+.icon-trash {
+  right: 10px
+}
+
+.notification {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 3;
+  padding: 5px 10px;
+  color: white;
+  display: none;
+  box-shadow: 0 4px 0 -2px rgba(0, 0, 0, 0.1)
+}
+.undo-button{
+  background-color: orange;
+  cursor: pointer;
+  margin-left: -100px;
+}
+.save-notification{
+  background-color: #2ecc71;
+  margin-left: -50px;
+}
+.clear-all {
+  border:0;
+  background-color: transparent;
+  padding: 7px 14px;
+  color: white;
+  float: right;
+  cursor: pointer;
+  font-size: 16px
+}
+.clear-all{
+  background-color: rgba(0,0,0,.25);
+  font:300 18px "Lato", "Arial", sans-serif;
+}
+
+button.disabled,
+.clear-all.disabled {
+  background-color: rgba(0,0,0,.25);
+  color: rgba(0,0,0,0.4);
+}
+
+button.disabled .icon-trash,
+.clear-all.disabled .icon-trash {
+  color: #888
+}
+
+button .icon-trash {
+  float: none;
+  margin-right: 10px;
+  opacity: 1 !important;
+  position: static
+}
+
+.count {
+  float: left
+}
+
+.count:after {
+  content: " 项目列表 "
+}
+.reminders {
+  list-style-type: none;
+  max-width: 500px;
+  margin: 30px auto
+}
+
+.reminders li {
+  z-index:1;
+  font-weight: 400;
+  /*box-shadow: 0 7px 0 -4px rgba(0, 0, 0, 0.2);*/
+  color: #444;
+  text-align: left;
+  
+  font-size: 20px;
+  background-color: white;
+  margin-bottom: 10px;
+  padding: 10px;
+  padding-right: 30px;
+  position: relative;
+  opacity: 0;
+  word-wrap: break-word;
+  -webkit-transition: all .1s ease;
+  -o-transition: all .1s ease;
+  transition: all .1s ease
+}
+.reminders li:focus {
+  outline: none;
+}
+li[contenteditable='true']{
+  color:black;
+}

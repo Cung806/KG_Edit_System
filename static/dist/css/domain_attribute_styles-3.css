@@ -1,0 +1,214 @@
+@charset "utf-8";
+@import "http://netdna.bootstrapcdn.com/font-awesome/2.0/css/font-awesome.css";
+
+
+li.new-item {
+  opacity: 0;
+  -webkit-animation: fadeIn .3s linear forwards;
+  -o-animation: fadeIn .3s linear forwards;
+  animation: fadeIn .3s linear forwards
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1
+  }
+}
+
+li.restored-item {
+  -webkit-animation: openspace .3s ease forwards, 
+    restored-item-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
+  -o-animation: openspace .3s ease forwards, 
+    restored-item-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
+  animation: openspace .3s ease forwards, 
+    restored-item-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards
+}
+
+@keyframes openspace {
+  to {
+    height: auto
+  }
+}
+
+@keyframes restored-item-animation {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(300px);
+    -ms-transform: translateX(300px);
+    -o-transform: translateX(300px);
+    transform: translateX(300px)
+  }
+
+  70% {
+    opacity: 1;
+    -webkit-transform: translateX(-50px);
+    -ms-transform: translateX(-50px);
+    -o-transform: translateX(-50px);
+    transform: translateX(-50px)
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0)
+  }
+}
+
+li.removed-item {
+  -webkit-animation: removed-item-animation .8s cubic-bezier(.65,-0.02,.72,.29);
+  -o-animation: removed-item-animation .8s cubic-bezier(.65,-0.02,.72,.29);
+  animation: removed-item-animation .8s cubic-bezier(.65,-0.02,.72,.29)
+}
+
+@keyframes removed-item-animation {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0)
+  }
+
+  30% {
+    opacity: 1;
+    -webkit-transform: translateX(50px);
+    -ms-transform: translateX(50px);
+    -o-transform: translateX(50px);
+    transform: translateX(50px)
+  }
+
+  80% {
+    opacity: 1;
+    -webkit-transform: translateX(-800px);
+    -ms-transform: translateX(-800px);
+    -o-transform: translateX(-800px);
+    transform: translateX(-800px)
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-800px);
+    -ms-transform: translateX(-800px);
+    -o-transform: translateX(-800px);
+    transform: translateX(-800px)
+  }
+}
+
+
+@-webkit-keyframes fadeIn {
+  to {
+    opacity: 1
+  }
+}
+
+@-o-keyframes fadeIn {
+  to {
+    opacity: 1
+  }
+}
+
+@-webkit-keyframes openspace {
+  to {
+    height: auto
+  }
+}
+
+@-o-keyframes openspace {
+  to {
+    height: auto
+  }
+}
+
+@-webkit-keyframes restored-item-animation {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(300px);
+    transform: translateX(300px)
+  }
+
+  70% {
+    opacity: 1;
+    -webkit-transform: translateX(-50px);
+    transform: translateX(-50px)
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0)
+  }
+}
+
+@-o-keyframes restored-item-animation {
+  0% {
+    opacity: 0;
+    -o-transform: translateX(300px);
+    transform: translateX(300px)
+  }
+
+  70% {
+    opacity: 1;
+    -o-transform: translateX(-50px);
+    transform: translateX(-50px)
+  }
+
+  100% {
+    opacity: 1;
+    -o-transform: translateX(0);
+    transform: translateX(0)
+  }
+}
+
+@-webkit-keyframes removed-item-animation {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0)
+  }
+
+  30% {
+    opacity: 1;
+    -webkit-transform: translateX(50px);
+    transform: translateX(50px)
+  }
+
+  80% {
+    opacity: 1;
+    -webkit-transform: translateX(-800px);
+    transform: translateX(-800px)
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-800px);
+    transform: translateX(-800px)
+  }
+}
+
+@-o-keyframes removed-item-animation {
+  0% {
+    opacity: 1;
+    -o-transform: translateX(0);
+    transform: translateX(0)
+  }
+
+  30% {
+    opacity: 1;
+    -o-transform: translateX(50px);
+    transform: translateX(50px)
+  }
+
+  80% {
+    opacity: 1;
+    -o-transform: translateX(-800px);
+    transform: translateX(-800px)
+  }
+
+  100% {
+    opacity: 0;
+    -o-transform: translateX(-800px);
+    transform: translateX(-800px)
+  }
+}

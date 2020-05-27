@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+       <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+       <link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.min.css">
+       <link rel="stylesheet" href="/static/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+       <link rel="stylesheet" href="/static/dist/css/skins/_all-skins.min.css">
+       <link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
+       <link rel="stylesheet" href="/static/plugins/iCheck/all.css">
+       <link rel="stylesheet" type="text/css" href="http://www.echartsjs.com/examples/stylesheets/main.css?_v_=1539619299314">    
+
+       <style>
+
+.table tbody {
+	display:block;
+	height:300px;
+	width:100%;
+	overflow-y:scroll;
+	text-align: center;
+}
+ 
+.table thead, tbody tr {
+	display:table;
+	width:100%;
+	table-layout:fixed;
+} 
+
+.table thead tr th{
+	text-align: center;
+  
+    }
+
+ul {
+    /* display: block;*/
+    height: 700px;
+    overflow-y:scroll;
+}
+      
+       </style>
+
+   </head>
+   <body class="hold-transition skin-blue">   
+            <div class="containers">
+                    <div class="box box-info" >
+                        
+                            <div class="box-body">
+                              
+                              <div class="col-lg-6">
+                                    <label style="font-size:17px;font-family:'Microsoft YaHei';margin-bottom: 10px">请输入您想搜索的实体：</label>
+                                    <div class="input-group" style="margin-bottom: 10px">
+                                        <input type="text" class="form-control" id="search_content" onkeypress="if (event.keyCode == 13) search();">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="search()" >搜索查询</button>
+                                        </span>
+                                    </div>
+                                </div>    
+                        <button class="btn btn-default" type="button" style="float:right" onclick="logout()" ><span class='glyphicon glyphicon-user'></span>注销</button>
+                        </div>
+                    </div>
+
+                      <div class="row">
+
+                    <div class="col-lg-2">
+                        <div class="box box-danger">
+                            <div class="box-body" id="entity">
+                               <label style="font-size:17px;font-family:'Microsoft YaHei';margin-bottom: 10px">实体列表：</label>
+                               <ul class="list-group" id="entity_list">
+                                   <!-- <a class="list-group-item">1</a>
+                                   <a class="list-group-item">2</a>
+                                   <a class="list-group-item">3</a>
+                                   <a class="list-group-item">4</a>
+                                   <a class="list-group-item">5</a> -->
+                               </ul>
+                            </div>                            
+                            </div>
+                        
+                </div>
+
+                <div class="col-lg-10">
+                        <div class="box box-warning">
+                                <div class="box-body">
+                                    <label style="font-size:17px;font-family:'Microsoft YaHei';margin-bottom: 10px">关联图谱如下：</label> 
+                                      
+                                      <div class="form-group">
+                                        <label>筛选实体间关系：</label>
+                                        <select id="shaixuan" style="width: 20%;height: 30px;">
+                                         
+                                        </select>
+                                        &nbsp;
+                                         <button type="button" class="btn btn-warning" onclick="shaixuan()">筛选</button>
+                                         <button type="button" class="btn btn-primary" style="float:right" data-toggle='modal' data-target='#exampleModal3'><span class='glyphicon glyphicon-arrow-left'></span>添加终结点<span class='glyphicon glyphicon-arrow-right'></span></button>
+                                         <button type="button" class="btn btn-primary" style="float:right;margin-right:20px" data-toggle='modal' data-target='#add_start_node'><span class='glyphicon glyphicon-arrow-right'></span>添加源节点<span class='glyphicon glyphicon-arrow-left'></span></button>
+
+                                         <button type="button" class="btn btn-primary" style="float:right ;margin-right:20px" data-toggle='modal' data-target='#add_node'>添加新节点</button>
+                                      </div>
+                                   
+                                    <div id="charts" style="height: 500px; width: 100%" ></div>
+                                  
+                                    <div class="table-responsive table-hover" id="table">
+                                            <!-- <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">序号</th>
+                                                            <th scope="col">中心实体</th>
+                                                            <th scope="col">关联实体</th>
+                                                            <th scope="col">对应关系</th>
+                                                            <th scope="col">操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="body"> -->
+                                                        <!-- <tr>
+                                                            <td scope="row">11111111111111</td>
+                                                            <td>1</td>
+                                                            <td>1</td>
+                                                            <td>1</td>
+                                                            <td><button class="btn btn-default btn-warning" onclick="bianji()" >编辑</button> &nbsp; <button class="btn btn-default btn-danger" onclick="bianji()" >删除</button></td>
+                                                        </tr>                                                        -->
+                                                    <!-- </tbody>
+                                                  </table> -->
+
+                                    </div>    
+    
+                                </div>                            
+                                </div>
+
+                </div>
+
+                </div>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h3 class="modal-title" id="exampleModalLabel">编辑信息</h3>
+                          
+                        </div>
+                        <div class="modal-body">                          
+                          <form>
+                            <div class="form-group">
+                              <label for="exampleFormControlInput1">起点实体名称</label>
+                              <input type="email" class="form-control" id="exampleFormControlInput1">
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleFormControlSelect1">起点实体类型</label>
+                              <select class="form-control" id="exampleFormControlSelect1">
+                               
+                              </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlInput2">终点实体名称</label>
+                                <input type="email" class="form-control" id="exampleFormControlInput2">
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleFormControlSelect2">终点实体类型</label>
+                                <select class="form-control" id="exampleFormControlSelect2">
+                                 
+                                </select>
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleFormControlSelect3">实体关系</label>
+                                <select class="form-control" id="exampleFormControlSelect3">
+                                 
+                                </select>
+                              </div>
+                           
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal" id="change">保存修改</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h3 class="modal-title" id="exampleModalLabel2">请注意</h3>
+                         
+                        </div>
+                        <div class="modal-body">
+                          确定删除?
+                        </div>
+                        <form>
+                        	<input type="hidden" name="data" id="data111">
+                        	<input type="hidden" name="del_name" id="del_name111">
+                        </form>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal" id="delete_sure">确定</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!--删除单选框-->
+
+                  <div class="modal fade" id="delete_selection" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true" align='center' style = 'padding: 300px 0'>
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h3 class="modal-title" id="exampleModalLabel2">请选择您所删除的选项：</h3>     
+                        </div>
+                        <div class="modal-body">
+                          <form action="">
+                          	<input type="hidden" name="pass_data" id="pass_data">
+							<input type="radio" name="del_name" value="relation" style="width:20px;height:20px;font-size:40px"><sup><b style="font-size:15px">删除实体关系</b></sup><br>
+							<input type="radio" name="del_name" value="startnode" style="width:20px;height:20px"><sup><b style="font-size:15px">删除起点实体</b></sup><br>
+							<input type="radio" name="del_name" value="endnode" style="width:20px;height:20px"><sup><b style="font-size:15px">删除终点实体</b></sup>
+						  </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal" id="delete_selection_bnt">确定</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="modal fade" id="add_start_node" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h3 class="modal-title" id="exampleModalLabel">添加源节点</h3>
+                          
+                        </div>
+                        <div class="modal-body">                          
+                          <form>
+                            <div class="form-group">
+                                <label for="Input2">起点实体名称</label>
+                                <input type="email" class="form-control" id="start_name">
+                              </div>
+                              <div class="form-group">
+                                <label for="Select2">起点实体类型</label>
+                                <select class="form-control" id="start_type">
+                                 
+                                </select>
+                              </div>
+
+                            <div class="form-group">
+                              <label for="Input1">终点实体名称</label>
+                              <input type="email" class="form-control" id="end_name" disabled>
+                            </div>
+                            <div class="form-group">
+                              <label for="Input3">终点实体类型</label>
+                              <input type="email" class="form-control" id="end_type" disabled>
+                            </div>
+                            
+                              <div class="form-group">
+                                <label for="Select3">实体关系</label>
+                                <select class="form-control" id="Select_relation_type">
+                                 
+                                </select>
+                              </div>
+                           
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="add_in_relation()">新增</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+                  <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h3 class="modal-title" id="exampleModalLabel">添加终结点</h3>
+                          
+                        </div>
+                        <div class="modal-body">                          
+                          <form>
+                            <div class="form-group">
+                              <label for="Input1">起点实体名称</label>
+                              <input type="email" class="form-control" id="Input1" disabled>
+                            </div>
+                            <div class="form-group">
+                              <label for="Input3">起点实体类型</label>
+                              <input type="email" class="form-control" id="Input3" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="Input2">终点实体名称</label>
+                                <input type="email" class="form-control" id="Input2">
+                              </div>
+                              <div class="form-group">
+                                <label for="Select2">终点实体类型</label>
+                                <select class="form-control" id="Select2">
+                                 
+                                </select>
+                              </div>
+                              <div class="form-group">
+                                <label for="Select3">实体关系</label>
+                                <select class="form-control" id="Select3">
+                                 
+                                </select>
+                              </div>
+                           
+                          </form>
+                        </div>
+
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="add_out_relation()">新增</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+                  <div class="modal fade" id="add_node" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h3 class="modal-title" id="exampleModalLabel">添加节点</h3>
+                          
+                        </div>
+                        <div class="modal-body">                          
+                          <form>
+                            <div class="form-group">
+                              <label for="Input1">实体名称</label>
+                              <input type="email" class="form-control" id="add_entity_name" >
+                            </div>
+                            <div class="form-group">
+                              <label for="Input2">实体类型</label>
+                              
+                              <select class="form-control" id="node_type">
+                                 
+                                </select>
+                            </div>  
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="add_node_fun()">新增</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h3 class="modal-title" id="exampleModalLabel2">实体关系详情</h3>
+                         
+                        </div>
+                        <div class="modal-body" id="detail">
+                          该关系详情为：
+                        </br>
+                        </div>
+                        <div class="modal-footer">                          
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                    </div>
+                    
+                </br>
+       
+                <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- bootstrap color picker -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <!-- <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script> -->
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+<script type = "text/javascript" src="/static/readme.js"></script>
+   
+   
+       <script>    
+            // window.type1 = [];
+            // window.type2 = [];           
+
+           $.getJSON(path+"get_label_relation_list",function(data){
+
+           	console.log("data",data);
+
+            window.type1=data["label_list"];	
+            window.type2=data["relation_list"];
+
+            console.log(window.type1);
+            console.log(window.type2);
+         
+            
+            var option = document.createElement("option");        
+               option.setAttribute("value","ALL");
+               option.innerHTML = "全部";
+              document.getElementById("shaixuan").appendChild(option);
+
+            for(var i =0;i<window.type2.length;i++){
+               var option = document.createElement("option");        
+               option.setAttribute("value",window.type2[i]);
+               option.innerHTML = window.type2[i];
+              document.getElementById("shaixuan").appendChild(option);
+         };  
+        
+           
+           });                   
+       
+    //    type1=["算法","模型","技术"];
+    //    type2=["因果关系","从属关系","同指关系"];
+         
+    //点击按钮动态创建列表,把列表加入到div中
+         function search () {   
+           removeAllChild("entity_list");    
+
+           var search_content = document.getElementById("search_content").value;
+        
+           $.post(path+"get_entity",{entity_name:search_content},function(result){
+               
+
+                 // //动态的创建li,加入到ul中
+                 result[0].forEach(element => {
+          
+            var liObj = document.createElement("a");
+            //设置li中的文字
+            liObj.className= "list-group-item";
+            liObj.setAttribute("onclick","show("+JSON.stringify(element)+")");
+            liObj.innerHTML = "●" +"  "+ element.name;
+            //将li追加到ul中
+            document.getElementById("entity_list").appendChild(liObj);
+        });
+             
+           });     
+    };
+
+    function logout(){
+    	window.location.href = "/account/logout/";//胡聪的url
+    };
+
+ function shaixuan(){
+     var relation = document.getElementById("shaixuan").value;
+     $.post(path+"get_neighbor",{entity_name:window.txt.name,entity_label:window.txt.label,relation_label:relation},function(result){
+              
+                if(result[0][0].endpoint=="无"){
+                    alert("没有该关系")
+                }else{
+                      showchart(result[0]);
+                      tablecontent(result[0]);
+    
+                      increase(window.txt);
+                }   
+           });    
+ 
+ };
+
+function bianji(data){
+    removeAllChild("exampleFormControlSelect1");  
+    removeAllChild("exampleFormControlSelect2");  
+    removeAllChild("exampleFormControlSelect3");    
+   
+    document.getElementById("exampleFormControlInput1").value=data.entity1;
+    document.getElementById("exampleFormControlInput2").value=data.entity2;   
+
+    for(var i =0;i<window.type1.length;i++){
+        var option = document.createElement("option");
+        if(window.type1[i]==data.entity1_type){
+            option.setAttribute("selected","selected");
+        }
+        option.setAttribute("value",window.type1[i]);
+        option.innerHTML = window.type1[i];
+        document.getElementById("exampleFormControlSelect1").appendChild(option);
+    };
+    for(var i =0;i<window.type1.length;i++){
+        var option = document.createElement("option");
+        if(window.type1[i]==data.entity2_type){
+            option.setAttribute("selected","selected");
+        };
+        option.setAttribute("value",window.type1[i]);
+        option.innerHTML = window.type1[i];
+        document.getElementById("exampleFormControlSelect2").appendChild(option);
+    };
+    for(var i =0;i<window.type2.length;i++){
+        var option = document.createElement("option");
+        if(window.type2[i]==data.value){
+            option.setAttribute("selected","selected");
+        }
+        option.setAttribute("value",window.type2[i]);
+        option.innerHTML = window.type2[i];
+        document.getElementById("exampleFormControlSelect3").appendChild(option);
+    }
+
+    document.getElementById("change").setAttribute("onclick","change("+JSON.stringify(data)+")")
+
+    };
+
+function change(data){
+      
+
+        var new_entity1=document.getElementById("exampleFormControlInput1").value;
+        var new_entity2=document.getElementById("exampleFormControlInput2").value;
+        var new_entity1_type = document.getElementById("exampleFormControlSelect1").value;
+        var new_entity2_type = document.getElementById("exampleFormControlSelect2").value;
+        var new_relation = document.getElementById("exampleFormControlSelect3").value;        
+
+        $.post(path+"change_kg",{n_name:data.entity1,n_label:data.entity1_type,r_name:data.value,m_name:data.entity2,m_label:data.entity2_type,new_n_name:new_entity1,new_n_label:new_entity1_type,new_r_name:new_relation,new_m_name:new_entity2,new_m_label:new_entity2_type},function(result){   
+            if(result == "SUCCESS"){
+                 removeAllChild(data.index);
+        var tr = document.getElementById(data.index)
+           var td =tr.insertCell (tr.cells.length);
+                td.innerHTML =data.index;
+
+
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =new_entity1;
+var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =new_entity1_type;
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =new_entity2;
+var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =new_entity2_type;
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =new_relation;
+             var td = tr.insertCell (tr.cells.length);
+            var obj = {index:data.index,entity1:new_entity1,entity1_type:new_entity1_type,entity2:new_entity2,entity2_type:new_entity2_type,value:new_relation}
+                //td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JSON.stringify(obj)+")' data-toggle='modal' data-target='#exampleModal'>编辑</button> &nbsp; <button class='btn btn-default btn-danger' data-toggle='modal' data-target='#exampleModal2' onclick=dele("+JSON.stringify(obj)+")>删除</button> &nbsp;<button class='btn btn-default btn-info' data-toggle='modal' data-target='#exampleModal4' onclick='xiangqing("+JSON.stringify(obj)+")' >详情</button>"; 
+td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JSON.stringify(obj)+")' data-toggle='modal' data-target='#exampleModal'>编辑</button> &nbsp; <button class='btn btn-default btn-danger' onclick=dele("+JSON.stringify(obj)+")>删除</button> &nbsp;<button class='btn btn-default btn-info' data-toggle='modal' data-target='#exampleModal4' onclick='xiangqing("+JSON.stringify(obj)+")' >详情</button>";     
+                td.setAttribute("style","width:20%");             
+                alert("修改成功");        
+            }else{
+                alert("修改失败");
+            }
+           
+        });      
+        
+    };
+
+function dele(data){
+        //document.getElementById("delete_sure").setAttribute("onclick","del("+JSON.stringify(data)+")");
+       // $("#dele").click(function(data){
+		$('#delete_selection').modal().on('shown.bs.modal',function() {
+				console.log(JSON.stringify(data));
+				$("#pass_data").val(JSON.stringify(data)); 
+    	 	})
+
+	//})
+    };
+
+function del(data,del_name){
+	//获取表单中的数据
+	     var selection = del_name;//document.getElementsByName("del_name");
+	     //alert(selection);
+	     var data = eval('(' + data + ')');
+	     if(selection == "relation"){
+	     	$.ajax({
+	    	 type:"post",//提交方式
+	    	 url:path+"delete_relation",
+	    	 data:{n_name:data.entity1,n_label:data.entity1_type,r_name:data.value,m_name:data.entity2,m_label:data.entity2_type},//数据
+	    	 dataType:"text",//返回的数据类型为json
+	    	 success:function(text){
+	    		 
+	    		 if(text == "SUCCESS"){
+	    		     show(window.txt);
+	    			 alert("删除成功！");
+	    		 }
+	    		 else if(text == "RELATION_FAIL"){
+	    		 	alert("该关系不存在，无法进行删除！");
+	    		 }
+	    		 else if(text == "ENTITY_FAIL"){
+	    		 	alert("该实体不存在，无法进行删除！");
+	    		 }else{
+	    		 	alert("删除失败！");
+	    		 }
+	    	 }
+	    	})
+
+	     }
+	     else if(selection == "startnode"){
+	     	$.ajax({
+	    	 type:"post",//提交方式
+	    	 url:path+"delete_startnode",
+	    	 data:{n_name:data.entity1,n_label:data.entity1_type,r_name:data.value,m_name:data.entity2,m_label:data.entity2_type},//数据
+	    	 dataType:"text",//返回的数据类型为json
+	    	 success:function(text){
+	    		 
+	    		 if(text == "SUCCESS"){
+	    		    if(data.entity2=="无"){
+	    		        window.location.reload();
+	    		    }
+	    		     show(window.txt);
+	    			 alert("删除成功！");
+	    		 }
+	    		 else if(text == "RELATION_FAIL"){
+	    		 	alert("该关系不存在，无法进行删除！");
+	    		 }
+	    		 else if(text == "ENTITY_FAIL"){
+	    		 	alert("该实体不存在，无法进行删除！");
+	    		 }else{
+	    		 	alert("删除失败！");
+	    		 }
+	    	 }
+	    	})
+	     }
+	     else{
+	     	$.ajax({
+	    	 type:"post",//提交方式
+	    	 url:path+"delete_endnode",
+	    	 data:{n_name:data.entity1,n_label:data.entity1_type,r_name:data.value,m_name:data.entity2,m_label:data.entity2_type},//数据
+	    	 dataType:"text",//返回的数据类型为json
+	    	 success:function(text){
+	    		 
+	    		 if(text == "SUCCESS"){
+	    		     show(window.txt);
+	    			 alert("删除成功！");
+	    		 }
+	    		 else if(text == "RELATION_FAIL"){
+	    		 	alert("该关系不存在，无法进行删除！");
+	    		 }
+	    		 else if(text == "ENTITY_FAIL"){
+	    		 	alert("该实体不存在，无法进行删除！");
+	    		 }else{
+	    		 	alert("删除失败！");
+	    		 }
+	    	 }
+	    	})
+
+	     }
+
+       
+        /*$.post(path+"delete_relation",{n_name:data.entity1,n_label:data.entity1_type,r_name:data.value,m_name:data.entity2,m_label:data.entity2_type},function(result){   
+            if(result == "SUCCESS"){
+                show(window.txt);
+                alert("删除成功");  
+            }else{
+                alert("删除失败");
+            }            
+        });*/
+    };
+
+
+	  
+	    
+  
+
+function xiangqing(data){
+        removeAllChild("detail")
+        var p = document.createElement("p");
+        p.setAttribute("style","font-size:18px");
+        $.post(path+"get_detail",{entity_1:data.entity1,entity_2:data.entity2},function(result){  
+             p.innerHTML=JSON.stringify(result);
+             document.getElementById("detail").appendChild(p);       
+        });       
+        
+       
+    };
+
+function add_out_relation(){
+        var entity1 = document.getElementById("Input1").value;
+        var entity1_type = document.getElementById("Input3").value;
+        var entity2 = document.getElementById("Input2").value;
+        var entity2_type = document.getElementById("Select2").value;
+        var relation = document.getElementById("Select3").value;
+       
+        $.post(path+"add_out_relation",{n_name:entity1,n_label:entity1_type,r_name:relation,m_name:entity2,m_label:entity2_type},function(result){   
+            if(result == "SUCCESS"){
+                show(window.txt);
+            
+                alert("添加成功");  
+            }else{
+                alert("添加失败");
+            }            
+        });
+        
+    };
+
+    function add_in_relation(){
+        var entity1 = document.getElementById("start_name").value;
+        var entity1_type = document.getElementById("start_type").value;
+        var entity2 = document.getElementById("end_name").value;
+        var entity2_type = document.getElementById("end_type").value;
+        var relation = document.getElementById("Select_relation_type").value;
+       
+        $.post(path+"add_in_relation",{n_name:entity1,n_label:entity1_type,r_name:relation,m_name:entity2,m_label:entity2_type},function(result){   
+            if(result == "SUCCESS"){
+                show(window.txt);
+            
+                alert("添加成功");  
+            }else{
+                alert("添加失败");
+            }            
+        });
+        
+    };
+
+function increase(text){
+    
+    //removeAllChild("Select2");  
+    //removeAllChild("Select3");  
+    //removeAllChild("start_type");  
+    //removeAllChild("Select_relation_type");
+    //removeAllChild("node_type"); 
+    document.getElementById("Input2").value = null;
+
+    document.getElementById("Input1").value=text.name;
+    document.getElementById("Input3").value=text.label;
+    document.getElementById("end_name").value=text.name;
+    document.getElementById("end_type").value=text.label;
+    
+    
+    var option1 = document.createElement("option");
+       
+        option1.setAttribute("value","");
+        option1.setAttribute("style","display:none");        
+        //document.getElementById("Select2").appendChild(option1);
+        //document.getElementById("start_type").appendChild(option1);
+        //document.getElementById("node_type").appendChild(option1);
+
+        var option2 = document.createElement("option");
+       
+       option2.setAttribute("value","");
+       option2.setAttribute("style","display:none");        
+       //document.getElementById("Select3").appendChild(option2);
+       //document.getElementById("Select_relation_type").appendChild(option2);
+
+       <!--console.log("increase",window.type1); 	-->
+
+       for(var i =0;i<window.type1.length;i++){
+        var option = document.createElement("option");
+       
+        option.setAttribute("value",window.type1[i]);
+        option.innerHTML = window.type1[i];
+        //document.getElementById("Select2").appendChild(option);
+        //document.getElementById("start_type").appendChild(option);
+        //document.getElementById("node_type").appendChild(option);
+    };
+    for(var i =0;i<window.type2.length;i++){
+        var option = document.createElement("option");
+       
+        option.setAttribute("value",window.type2[i]);
+        option.innerHTML = window.type2[i];
+        //document.getElementById("Select3").appendChild(option);
+        //document.getElementById("Select_relation_type").appendChild(option);
+    }
+
+    
+    };
+
+function removeAllChild(text)
+{
+    var a = document.getElementById(text);
+    while(a.hasChildNodes()) //当div下还存在子节点时 循环继续
+    {
+        a.removeChild(a.firstChild);
+    }
+};
+
+function show(text){
+  
+    window.txt = text;
+
+    $.post(path+"get_neighbor",{entity_name:text.name,entity_label:text.label,relation_label:"ALL"},function(result){
+
+        if(result[0][0].endpoint == "无")
+        {
+          shownode(text.name);
+          increase(text);
+          tablecontent(result[0]);
+
+        }else{
+          showchart(result[0]);
+          tablecontent(result[0]);
+        
+          console.log("show",text.name);
+          increase(text);
+
+
+        }
+            
+         // showchart(result[0]);
+          //tablecontent(result[0]);
+    		
+         // console.log("show",text.name);
+         // increase(text);
+             
+           });     
+   
+};
+function shownode(text){ 
+  document.getElementById("charts").innerHTML="<div align='center' style = 'padding: 300px 0'><button class='btn btn-info' style=' background-color: #DC143C;color: white;  font-size: 16px; border-radius: 8px; float:center;'onclick='single_node()' >"+text+"</button></div>";   
+
+  }
+
+     function single_node(){
+             alert("该实体不存在任何关系");
+  }
+
+
+function showchart(data){    
+    var chart = document.getElementById("charts");
+    chart.removeAttribute("_echarts_instance_");//加上这句表示情况重复数据,二次加载清空原始数据
+    var myChart = echarts.init(chart);
+    myChart.off('click');
+    var app = {};  
+    option=null;   
+
+                  
+       
+function get_nodes(data) {
+    var nodes = [];
+    var tmp_nodes = [];
+    var node_exist = false;
+    var endpoint_exist = false;
+    
+    for(var nodes_i in data) {
+       tmp_nodes.forEach(item =>{
+            if(item==data[nodes_i].node){
+                node_exist = true;
+            }
+            if(item == data[nodes_i].endpoint){
+                endpoint_exist = true;
+            }
+        });
+
+        if(node_exist){
+           
+        }else{
+            tmp_nodes.push(data[nodes_i].node);
+            nodes.push(
+            {
+                'name':data[nodes_i].node,
+                'type':data[nodes_i].type,
+            }
+        );
+        };
+        if(endpoint_exist){
+          
+        }else{
+         tmp_nodes.push(data[nodes_i].endpoint);
+         nodes.push(
+         {
+        'name':data[nodes_i].endpoint,
+        'type':data[nodes_i].endpointtype,
+            }
+        );
+        };    
+        
+        node_exist = false;
+        endpoint_exist = false;
+        
+    }
+     return nodes;
+}
+
+function get_links(data) {
+    var links = [];
+    for(var nodes_i in data) {
+        var node = data[nodes_i].node;
+        var endpoint = data[nodes_i].endpoint;
+        var value = data[nodes_i].value;
+             
+            links.push({
+                'source':node,
+                'target':endpoint,
+                'label': {
+                    'normal': {
+                        'show': true,
+                        'textStyle':{
+                            'fontSize':10
+                        },
+                        'formatter': value
+                    }
+                },
+                'lineStyle': {
+                    'normal': {
+                        'curveness': 0.1
+                    }
+                }
+            })
+        }
+    
+    for (var i = 0, len1 = links.length; i < len1; i++) {
+        for(var j = i, len2 = len1 - 1; j < len2; j++) {
+            if (links[i].source==links[j].target) {
+                links[j].lineStyle.normal.curveness = -0.1;
+            }
+        }
+    }
+    
+    return links;
+}
+
+var option = {
+    // title: {
+    //     text: '调用关系demo'
+    // },
+    // tooltip: {
+    //     formatter: '调用方法'
+    // },
+    animationDurationUpdate: 1500,
+    animationEasing: 'cubicOut',
+    animationEasingUpdate: 'quinticInOut',
+    series : [
+        {
+            type: 'graph',
+            layout: 'circular',
+            // layout:'none',
+            focusNodeAdjacency: true,
+            legendHoverLink: true,
+            hoverAnimation:true,
+            symbolSize: 50,
+            //edgeSymbolSize: 50,
+            roam: true,
+            symbol: "roundRect",
+            label: {
+                normal: {
+                    show: true,
+                    //color:'#455A74',
+                }
+            },
+            edgeSymbol: ['circle', 'arrow'],
+            edgeSymbolSize: [4, 15],
+            edgeLabel: {
+                normal: {
+                    textStyle: {
+                        fontSize: 5
+                    }
+                }
+            },
+            data: get_nodes(data),
+            links: get_links(data),
+            lineStyle: {
+                normal: {
+                    opacity: 0.9,
+                    width: 2,
+                    curveness: 0,
+                    // type :'dashed'
+                }
+            }
+        },
+    ]
+};
+//添加点击事件
+myChart.on('click', function (params) {
+    // 弹窗打印数据的名称
+
+    if (params.dataType=="node") {
+
+        show({name:params.data.name,label:params.data.type})
+        // alert("实体名称为："+params.name);
+    }else if(params.dataType=="edge"){
+    alert("关系为："+params.data.label.formatter);
+    }
+});
+   
+   if (option && typeof option === "object") {
+       myChart.setOption(option, true);
+   }
+};//end showchart
+
+function tablecontent(data){
+        removeAllChild("table");    
+ 
+var entity = [];
+for (var i = 0; i < data.length; i++)
+{
+    var d = data[i];    
+    entity.push({index:(i+1),entity1:d["node"],entity1_type:d["type"],entity2:d["endpoint"],entity2_type:d["endpointtype"],value:d["value"]});
+}
+ 
+
+    var table = document.createElement("table");
+    table.className="table";
+    var thead = document.createElement("thead");
+    table.appendChild(thead);
+    var tr = thead.insertRow (0);
+    var str = "序号,起点实体,起点实体类型,终点实体,终点实体类型,实体关系,操作".split(",");
+    for (var i = 0; i < str.length; i++)
+    {
+        var th = document.createElement("th");
+        th.innerHTML = str[i];
+        if(i == str.length-1){
+            th.setAttribute("style","width:20%");
+        }
+        tr.appendChild (th);
+    }
+
+    var tbody = document.createElement("tbody");    
+    table.appendChild(tbody);   
+   
+    for (var i = 0; i < entity.length; i++)
+    {
+        var tr = tbody.insertRow (tbody.rows.length);        
+        var obj = entity[i];
+        tr.setAttribute("id",JSON.stringify(obj["index"]));
+
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =obj["index"];
+
+
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =obj["entity1"];
+var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =obj["entity1_type"];
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =obj["entity2"];
+var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =obj["entity2_type"];
+             var td = tr.insertCell (tr.cells.length);
+                td.innerHTML =obj["value"];
+             var td = tr.insertCell (tr.cells.length);
+                //td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JSON.stringify(obj)+")' data-toggle='modal' data-target='#exampleModal'>编辑</button> &nbsp; <button class='btn btn-default btn-danger' data-toggle='modal' data-target='#exampleModal2' onclick=dele("+JSON.stringify(obj)+")>删除</button> &nbsp;<button class='btn btn-default btn-info' data-toggle='modal' data-target='#exampleModal4' onclick='xiangqing("+JSON.stringify(obj)+")' >详情</button>";  
+td.innerHTML ="<button class='btn btn-default btn-warning' onclick='bianji("+JSON.stringify(obj)+")' data-toggle='modal' data-target='#exampleModal'>编辑</button> &nbsp; <button class='btn btn-default btn-danger' onclick=dele("+JSON.stringify(obj)+")>删除</button> &nbsp;<button class='btn btn-default btn-info' data-toggle='modal' data-target='#exampleModal4' onclick='xiangqing("+JSON.stringify(obj)+")' >详情</button>";     
+                td.setAttribute("style","width:20%");
+        
+    }
+    document.getElementById("table").appendChild(table);       
+    };   
+
+     function add_node_fun()  
+    {
+      var add_entity_name = $("#add_entity_name").val();
+      var add_entity_type = $("#node_type").val();
+      $.ajax({
+              type:"post",
+              url:path+"add_node",//url??????????????????????????????????????????????????????????????
+              data:{entity_name:add_entity_name,entity_label:add_entity_type},//传所删除的领域的名称
+              dataType:"text",//返回的数据类型为json
+              success:function(text){                 
+                 if(text =="SUCCESS"){             
+                    $("#add_node").modal('hide'); 
+                    alert("增加节点成功");
+                 }
+                 else if(text =="NODE EXIST")
+                 {
+                  alert("该节点已经存在！");
+                 }else{
+                  alert("增加节点失败");
+                 }
+               }
+          })
+
+    }
+       
+       </script>
+        
+          
+
+        <script type="text/javascript">
+        	$.ajax({  
+		    type : 'get',  
+		    url : path+"get_label_relation_list",  
+		    dataType : 'json',      
+		    success : function(datas) {//返回list数据并循环获取  
+		    	
+		        var select = $("#Select3");
+		        for (var i = 0; i < datas.relation_list.length; i++) { 
+		        	select.append("<option value='" +datas.relation_list[i]+ "'>"  
+		                    + datas.relation_list[i] + "</option>");  
+		        }    
+		    } 
+		}); 
+
+        	$.ajax({  
+		    type : 'get',  
+		    url : path+"get_label_relation_list",  
+		    dataType : 'json',      
+		    success : function(datas) {//返回list数据并循环获取  
+		    	
+		        var select = $("#Select_relation_type");
+		        for (var i = 0; i < datas.relation_list.length; i++) { 
+		        	select.append("<option value='" +datas.relation_list[i]+ "'>"  
+		                    + datas.relation_list[i] + "</option>");  
+		        }    
+		    } 
+		}); 
+
+        	$.ajax({  
+		    type : 'get',  
+		    url : path+"get_label_relation_list",  
+		    dataType : 'json',      
+		    success : function(datas) {//返回list数据并循环获取  
+		    	
+		        var select = $("#Select2");
+		        for (var i = 0; i < datas.label_list.length; i++) { 
+		        	select.append("<option value='" +datas.label_list[i]+ "'>"  
+		                    + datas.label_list[i] + "</option>");  
+		        }    
+		    } 
+		}); 
+
+        	$.ajax({  
+		    type : 'get',  
+		    url : path+"get_label_relation_list",  
+		    dataType : 'json',      
+		    success : function(datas) {//返回list数据并循环获取  
+		    	
+		        var select = $("#start_type");
+		        for (var i = 0; i < datas.label_list.length; i++) { 
+		        	select.append("<option value='" +datas.label_list[i]+ "'>"  
+		                    + datas.label_list[i] + "</option>");  
+		        }    
+		    } 
+		}); 
+
+        	$.ajax({  
+		    type : 'get',  
+		    url : path+"get_label_relation_list",  
+		    dataType : 'json',      
+		    success : function(datas) {//返回list数据并循环获取  
+		    	
+		        var select = $("#node_type");
+		        for (var i = 0; i < datas.label_list.length; i++) { 
+		        	select.append("<option value='" +datas.label_list[i]+ "'>"  
+		                    + datas.label_list[i] + "</option>");  
+		        }    
+		    } 
+		}); 
+
+        </script>
+
+        <script type="text/javascript">
+	$("#delete_selection_bnt").click(function(){
+			var data = $("#pass_data").val();
+			var radio = document.getElementsByName("radio");
+			var del_name=$('input:radio:checked').val(); 
+		$('#exampleModal2').modal().on('shown.bs.modal',function() {
+
+			console.log(del_name);
+			console.log(data);
+				//document.getElementById("delete_sure").setAttribute("onclick","del( \""+data+"\",\""+del_name+"\")");
+				$("#data111").val(data);
+		    	$("#del_name111").val(del_name);
+    	 	})
+
+	})
+
+	$("#delete_sure").click(function(){
+		var data = $("#data111").val();
+		//var radio = document.getElementsByName("radio");
+		var del_name=$("#del_name111").val();
+		console.log(data);
+		console.log(del_name);
+		del(data,del_name);
+
+	})
+	 /*$("#delete_sure").click(function(){
+	  
+	    //获取表单中的数据
+	     var selection = document.getElementsByName("del_name");
+	     if(selection == "relation"){
+	     	$.ajax({
+	    	 type:"post",//提交方式
+	    	 url:path+"delete_relation",
+	    	 data:CheckItemForm,//数据
+	    	 dataType:"text",//返回的数据类型为json
+	    	 success:function(text){
+	    		var selection = document.getElementsByName(" 
+	    		 if(text == "SUCCESS"){
+	    		     show(window.txt);
+	    			 alert("删除成功！");
+	    		 }
+	    		 else if(text == "RELATION_FAIL"){
+	    		 	alert("该关系不存在，无法进行删除！");
+	    		 }
+	    		 else if(text == "ENTITY_FAIL"){
+	    		 	alert("该实体不存在，无法进行删除！");
+	    		 }else{
+	    		 	alert("删除失败！");
+	    		 }
+	    	 }
+	    	})
+
+	     }
+	     else if(selection == "startnode"){
+	     	$.ajax({
+	    	 type:"post",//提交方式
+	    	 url:path+"delete_startnode",
+	    	 data:CheckItemForm,//数据
+	    	 dataType:"text",//返回的数据类型为json
+	    	 success:function(text){
+	    		 
+	    		 if(text == "SUCCESS"){
+	    		     show(window.txt);
+	    			 alert("删除成功！");
+	    		 }
+	    		 else if(text == "RELATION_FAIL"){
+	    		 	alert("该关系不存在，无法进行删除！");
+	    		 }
+	    		 else if(text == "ENTITY_FAIL"){
+	    		 	alert("该实体不存在，无法进行删除！");
+	    		 }else{
+	    		 	alert("删除失败！");
+	    		 }
+	    	 }
+	    	})
+	     }
+	     else{
+	     	$.ajax({
+	    	 type:"post",//提交方式
+	    	 url:path+"delete_endnode",
+	    	 data:CheckItemForm,//数据
+	    	 dataType:"text",//返回的数据类型为json
+	    	 success:function(text){
+	    		 
+	    		 if(text == "SUCCESS"){
+	    		     show(window.txt);
+	    			 alert("删除成功！");
+	    		 }
+	    		 else if(text == "RELATION_FAIL"){
+	    		 	alert("该关系不存在，无法进行删除！");
+	    		 }
+	    		 else if(text == "ENTITY_FAIL"){
+	    		 	alert("该实体不存在，无法进行删除！");
+	    		 }else{
+	    		 	alert("删除失败！");
+	    		 }
+	    	 }
+	    	})
+
+	     }
+  })*/
+</script>
+      </body>
+</html>

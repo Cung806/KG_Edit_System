@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+       <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+       <link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.min.css">
+       <link rel="stylesheet" href="/static/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+       <link rel="stylesheet" href="/static/dist/css/skins/_all-skins.min.css">
+       <link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
+       <link rel="stylesheet" href="/static/plugins/iCheck/all.css">
+       <link rel="stylesheet" type="text/css" href="http://www.echartsjs.com/examples/stylesheets/main.css?_v_=1539619299314">    
+
+       <style>
+
+.table tbody {
+	display:block;
+	height:300px;
+	width:100%;
+	overflow-y:scroll;
+	text-align: center;
+}
+ 
+.table thead, tbody tr {
+	display:table;
+	width:100%;
+	table-layout:fixed;
+} 
+
+.table thead tr th{
+	text-align: center;
+  
+    }
+
+ul {
+    /* display: block;*/
+    height: 700px;
+    overflow-y:scroll;
+}
+      
+       </style>
+
+   </head>
+   <body class="hold-transition skin-blue">   
+            <div class="containers">
+                    <div class="box box-info" >
+                        
+                            <div class="box-body">
+                              
+                              <div class="col-lg-6">
+                                    <label style="font-size:17px;font-family:'Microsoft YaHei';margin-bottom: 10px">请输入您想搜索的实体：</label>
+                                    <div class="input-group" style="margin-bottom: 10px">
+                                        <input type="text" class="form-control" id="search_content" onkeypress="if (event.keyCode == 13) search();">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="search()" >搜索查询</button>
+                                        </span>
+                                    </div>
+                                </div>    
+                       
+                        </div>
+                    </div>
+
+                      <div class="row">
+
+                    <div class="col-lg-2">
+                        <div class="box box-danger">
+                            <div class="box-body" id="entity">
+                               <label style="font-size:17px;font-family:'Microsoft YaHei';margin-bottom: 10px">实体列表：</label>
+                               <ul class="list-group" id="entity_list">
+                               </ul>
+                            </div>                            
+                            </div>
+                        
+                </div>
+
+                <div class="col-lg-10">
+                        <div class="box box-warning">
+                                <div class="box-body">
+                                    <label style="font-size:17px;font-family:'Microsoft YaHei';margin-bottom: 10px ">关联图谱如下：</label> 
+                                      
+                                      <div class="form-group" >
+                                        <label>筛选实体间关系：</label>
+                                        <select id="shaixuan" style="width: 20%;height: 30px;">
+                                         
+                                        </select>
+                                        &nbsp;
+                                         
+
+                                         <label>选择图谱领域：</label>
+                                        <select id="domain_select" name="domain_name" style="width: 20%;height: 30px;">
+                                         
+                                        </select>
+                                        &nbsp;
+
+                                        <button type="button" class="btn btn-warning" onclick="shaixuan()">筛选</button>
+                                      </div>
+                                   
+                                    <div id="charts" style="height: 500px; width: 100%" ></div>
+                                  
+                                    <div class="table-responsive table-hover" id="table">
+                                           
+                                    </div>    
+    
+                                </div>                            
+                                </div>
+
+                </div>
+
+                </div>
+
+                
+                 
+                <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- bootstrap color picker -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <!-- <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script> -->
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+<script type = "text/javascript" src="/static/readme.js"></script>
+   
+   
+       <script>    
+           
+           $.post("http://39.100.48.36:3010/editkg/get_label_relation_list_demo",{domain_name:"计算机"},function(data){//path+"get_label_relation_list"
+
+           	console.log("data",data,typeof(data));
+
+            data1 = JSON.parse(data);
+            console.log("data1",data1,typeof(data1));
+            window.type1=data1["label_list"];	
+            window.type2=data1["relation_list"];
+            var label = data1["label_list"];
+            var relation = data1["relation_list"];
+            console.log(window.type1);
+            console.log(window.type2);
+         
+            
+            var option = document.createElement("option");        
+               option.setAttribute("value","ALL");
+               option.innerHTML = "全部";
+              document.getElementById("shaixuan").appendChild(option);
+
+            for(var i =0;i<window.type2.length;i++){
+               var option = document.createElement("option");        
+               option.setAttribute("value",window.type2[i]);
+               option.innerHTML = window.type2[i];
+              document.getElementById("shaixuan").appendChild(option);
+
+
+              
+    
+
+         };  
+        
+           
+           });  
+
+       $.post("http://39.100.48.36:3010/editkg/get_label_relation_list_demo",{domain_name:"计算机"},function(result){
+            console.log(result);
+        })
+    
+
+    $.ajax({  
+              type : 'get',  
+              url : "http://39.100.48.36:3010/manageDomain/get_domain_list/",
+              dataType : 'json',      
+              success : function(datas) {//返回list数据并循环获取  
+                
+                  var select = $("#domain_select");
+                  for (var i = 0; i < datas.domain_list.length; i++) { 
+                    select.append("<option value='" +datas.domain_list[i]+ "'>"  
+                              + datas.domain_list[i] + "</option>");  
+                  }    
+              } 
+            });   
+         function search () {   
+           removeAllChild("entity_list");    
+           var domain_name = $("#domain_select").val();
+           var search_content = document.getElementById("search_content").value;
+           console.log(domain_name);
+           $.post("http://39.100.48.36:3010/editkg/get_entity_demo" ,{entity_name:search_content,domain_name:domain_name},function(result){
+               //+"get_entity"
+               console.log(result);
+                 // //动态的创建li,加入到ul中
+                 result[0].forEach(element => {
+          
+            var liObj = document.createElement("a");
+            //设置li中的文字
+            liObj.className= "list-group-item";
+            liObj.setAttribute("onclick","show("+JSON.stringify(element)+")");
+            liObj.innerHTML = "●" +"  "+ element.name;
+            //将li追加到ul中
+            document.getElementById("entity_list").appendChild(liObj);
+        });
+             
+           });     
+    };
+
+ function shaixuan(){
+     var relation = document.getElementById("shaixuan").value;
+     var domain_name = $("#domain_select").val();
+     console.log(domain_name);
+     $.post("http://39.100.48.36:3010/editkg/get_neighbor_demo",{entity_name:window.txt.name,entity_label:window.txt.label,relation_label:relation,domain_name:domain_name},function(result){
+              
+                if(result[0][0].endpoint=="无"){
+                    alert("没有该关系")
+                }else{
+                      showchart(result[0]);
+                      tablecontent(result[0]);
+    
+                      increase(window.txt);
+                }   
+           });    
+ 
+ };
+
+
+
+function removeAllChild(text)
+{
+    var a = document.getElementById(text);
+    while(a.hasChildNodes()) //当div下还存在子节点时 循环继续
+    {
+        a.removeChild(a.firstChild);
+    }
+};
+
+function show(text){
+  
+    window.txt = text;
+    var domain_name = $("#domain_select").val();
+    $.post("http://39.100.48.36:3010/editkg/get_neighbor_demo",{domain_name:domain_name,entity_name:text.name,entity_label:text.label,relation_label:"ALL"},function(result){
+
+        if(result[0][0].endpoint == "无")//不存在与该实体的关系
+        {
+          shownode(text.name);
+          increase(text);
+          //tablecontent(result[0]);  注释掉的下边的详细表格
+
+        }else{
+          showchart(result[0]);
+          //tablecontent(result[0]);注释掉的下边的详细表格
+        
+          console.log("show",text.name);
+          increase(text);
+
+
+        }
+             
+           });     
+   
+};
+function shownode(text){ 
+  document.getElementById("charts").innerHTML="<div align='center' style = 'padding: 300px 0'><button class='btn btn-info' style=' background-color: #DC143C;color: white;  font-size: 16px; border-radius: 8px; float:center;'onclick='single_node()' >"+text+"</button></div>";   
+
+  }
+
+     function single_node(){
+             alert("该实体不存在任何关系");
+  }
+
+
+function showchart(data){    
+    var chart = document.getElementById("charts");
+    chart.removeAttribute("_echarts_instance_");//加上这句表示情况重复数据,二次加载清空原始数据
+    var myChart = echarts.init(chart);
+    myChart.off('click');
+    var app = {};  
+    option=null; 
+
+    var categories = [];
+    var type_list = ["处理任务","处理方法","数据集","评估指标"];
+    for (var i = 1; i < 5; i++) {
+        categories[i-1] = {
+            name: type_list[i-1]
+        };
+    }
+                  
+       
+function get_nodes(data) {
+    var nodes = [];//用来保存知识图谱的节点以及节点的类型  每一个元素为一个dict
+    var tmp_nodes = [];//用来保存知识图谱的节点 
+    var node_exist = false;
+    var endpoint_exist = false;
+    var type_dict = {}
+    type_dict["处理方法"] = 1;
+    type_dict["处理任务"] = 2;
+    type_dict["数据集"] = 3;
+    type_dict["评估指标"] = 4;
+    for(var nodes_i in data) {
+       tmp_nodes.forEach(item =>{//判断是否有重复的节点
+            if(item==data[nodes_i].node){
+                node_exist = true;
+            }
+            if(item == data[nodes_i].endpoint){
+                endpoint_exist = true;
+            }
+        });
+
+       // 存储节点
+        if(node_exist){
+           
+        }else{
+            tmp_nodes.push(data[nodes_i].node);
+            nodes.push(
+            {
+                'name':data[nodes_i].node,
+                'type':data[nodes_i].type,
+                'category':type_dict[data[nodes_i].type],
+            }
+        );
+        };
+        if(endpoint_exist){
+          
+        }else{
+         tmp_nodes.push(data[nodes_i].endpoint);
+         nodes.push(
+         {
+        'name':data[nodes_i].endpoint,
+        'type':data[nodes_i].endpointtype,
+        'category':type_dict[data[nodes_i].type],
+            }
+        );
+        };    
+        
+        node_exist = false;
+        endpoint_exist = false;
+        
+    }
+     return nodes;
+}
+
+function get_links(data) {//用来保存节点之间的关系
+    var links = [];
+    for(var nodes_i in data) {
+        var node = data[nodes_i].node;
+        var endpoint = data[nodes_i].endpoint;
+        var value = data[nodes_i].value;
+             
+            links.push({
+                'source':node,
+                'target':endpoint,
+                'label': {
+                    'normal': {
+                        'show': true,
+                        'textStyle':{
+                            'fontSize':10
+                        },
+                        'formatter': value
+                    }
+                },
+                'lineStyle': {
+                    'normal': {
+                        'curveness': 0.1
+                    }
+                }
+            })
+        }
+    
+    for (var i = 0, len1 = links.length; i < len1; i++) {
+        for(var j = i, len2 = len1 - 1; j < len2; j++) {
+            if (links[i].source==links[j].target) {
+                links[j].lineStyle.normal.curveness = -0.1;
+            }
+        }
+    }
+    
+    return links;
+}
+
+var option = {
+    
+    animationDurationUpdate: 1500,
+    animationEasing: 'cubicOut',
+    animationEasingUpdate: 'quinticInOut',
+    legend: [{
+            data: categories.map(function (a) {
+                return a.name;
+            })
+        }],
+    series : [
+        {
+            type: 'graph',
+            layout: 'circular',
+            // layout:'none',
+            focusNodeAdjacency: true,
+            legendHoverLink: true,
+            hoverAnimation:true,
+            symbolSize: 50,
+            //edgeSymbolSize: 50,
+            roam: true,
+            symbol: "roundRect",
+            label: {
+                normal: {
+                    show: true,
+                    //color:'#455A74',
+                }
+            },
+            edgeSymbol: ['circle', 'arrow'],
+            edgeSymbolSize: [4, 15],
+            edgeLabel: {
+                normal: {
+                    textStyle: {
+                        fontSize: 5
+                    }
+                }
+            },
+            data: get_nodes(data),
+            links: get_links(data),
+            categories: categories,
+            lineStyle: {
+                normal: {
+                    opacity: 0.9,
+                    width: 2,
+                    curveness: 0,
+                }
+            }
+        }]
+    
+};
+//添加点击事件
+myChart.on('click', function (params) {
+    // 弹窗打印数据的名称
+
+    if (params.dataType=="node") {
+
+        show({name:params.data.name,label:params.data.type})
+        // alert("实体名称为："+params.name);
+    }else if(params.dataType=="edge"){
+    alert("关系为："+params.data.label.formatter);
+    }
+});
+   
+   if (option && typeof option === "object") {
+       myChart.setOption(option, true);
+   }
+};//end showchart
+
+
+       </script>
+        
+          
+
+        <script type="text/javascript">
+          $.post("http://39.100.48.36:3010/editkg/get_label_relation_list_demo",{domain_name:"计算机"},function(result){
+            console.log(result);
+
+            var datas = JSON.parse(result);
+            var select = $("#Select3");
+             for (var i = 0; i < datas.relation_list.length; i++) { 
+              select.append("<option value='" +datas.relation_list[i]+ "'>"  
+                         + datas.relation_list[i] + "</option>");  
+             }
+
+            var select_relation_type = $("#Select_relation_type");
+             for (var i = 0; i < datas.relation_list.length; i++) { 
+              select_relation_type.append("<option value='" +datas.relation_list[i]+ "'>"  
+                         + datas.relation_list[i] + "</option>");  
+             } 
+
+             var select2 = $("#Select2");
+             for (var i = 0; i < datas.label_list.length; i++) { 
+              select2.append("<option value='" +datas.label_list[i]+ "'>"  
+                         + datas.label_list[i] + "</option>");  
+             } 
+
+             var select_start_type = $("#start_type");
+             for (var i = 0; i < datas.label_list.length; i++) { 
+              select_start_type.append("<option value='" +datas.label_list[i]+ "'>"  
+                         + datas.label_list[i] + "</option>");  
+             }
+
+              var select_node_type = $("#node_type");
+             for (var i = 0; i < datas.label_list.length; i++) { 
+              select_node_type.append("<option value='" +datas.label_list[i]+ "'>"  
+                         + datas.label_list[i] + "</option>");  
+            }   
+        
+        }
+        );        
+        </script>
+
+        <script type="text/javascript">
+	
+
+	
+	
+</script>
+      </body>
+</html>
