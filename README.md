@@ -12,6 +12,11 @@
 | 同指关系        |    数据集    |
 | 包含关系        |    评估指标    |
 
-#### 知识图谱构建中用到的命名实体识别模型的demo展示链接： <http://39.100.48.36/entity.html>
 #### 项目截图如下:
 ![demo](https://raw.githubusercontent.com/Cung806/KG_Edit_System/master/demo.png)
+
+----
+# 实验室项目组介绍以及项目展示如下
+#### 重庆大学nlp平台链接：<http://39.100.48.36>
+#### 知识图谱构建中用到的命名实体识别模型的demo展示链接： <http://39.100.48.36/entity.html>
+#### 知识图谱构建中用到的关系抽取模型的demo展示链接：<http://39.100.48.36/relation.html>
